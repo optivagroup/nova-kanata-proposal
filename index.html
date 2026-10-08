@@ -149,6 +149,26 @@ ol.clean { margin: 0; padding-left: 22px; display: grid; gap: 7px; max-width: 70
   .tile { padding: 14px; }
   .card { padding: 18px; }
 }
+
+@media (max-width: 640px) {
+  .tabbar { flex-wrap: wrap; overflow-x: visible; gap: 0 2px; }
+  .tab { padding: 10px 10px 8px; font-size: 0.9rem; }
+  .table-wrap { border: 0; background: none; overflow: visible; border-radius: 0; }
+  table, thead, tbody, tr, td { display: block; width: 100%; min-width: 0; }
+  thead { display: none; }
+  tr { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; padding: 12px 14px; }
+  td { border: 0; padding: 3px 0; }
+  td.r { text-align: left; }
+  tr.sub { background: var(--surface-2); } tr.final { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  tr.sub td, tr.final td { background: transparent; }
+  .stack td:first-child { font-weight: 700; font-size: 1.02rem; padding-bottom: 6px; }
+  .stack td[data-label]::before { content: attr(data-label); display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-top: 6px; }
+  .nolabel td::before { display: none; }
+  .kv tr { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+  .kv td { width: auto; min-width: 0; }
+  .kv td:first-child { flex: 1 1 auto; }
+  .kv td:last-child { flex: 0 0 auto; text-align: right; font-weight: 600; }
+}
 </style>
 
 <div class="wrap nojs" id="root">
@@ -190,7 +210,7 @@ ol.clean { margin: 0; padding-left: 22px; display: grid; gap: 7px; max-width: 70
       <div class="tile">
         <p class="k">Usage fees</p>
         <p class="v num">~$90&ndash;180</p>
-        <p class="s">A month for the AI agent, texts and email, paid at cost. I cover the HighLevel account.</p>
+        <p class="s">A month for the AI agent, texts and email, paid at cost. I cover the custom CRM.</p>
       </div>
     </div>
 
@@ -229,7 +249,7 @@ ol.clean { margin: 0; padding-left: 22px; display: grid; gap: 7px; max-width: 70
         <div class="part-head"><h3>Speed-to-lead build</h3><span class="badge num">$3,500</span></div>
         <h4>What I do</h4>
         <ul>
-          <li>Set up HighLevel for Nova Kanata with one pipeline for every lead</li>
+          <li>Set up the custom CRM for Nova Kanata with one pipeline for every lead</li>
           <li>Connect the website form, Instagram messages and ad lead forms</li>
           <li>Write the instant reply, confirmation and follow-up text and email sequences</li>
           <li>Build follow-up for customers who go quiet</li>
@@ -312,7 +332,7 @@ ol.clean { margin: 0; padding-left: 22px; display: grid; gap: 7px; max-width: 70
     <div class="block" style="margin-top:0;">
       <h2>The price</h2>
       <div class="table-wrap">
-        <table class="num">
+        <table class="num kv">
           <thead><tr><th>Part</th><th class="r">Value (CAD)</th></tr></thead>
           <tbody>
             <tr><td class="item">Speed-to-lead build</td><td class="r">$3,500</td></tr>
@@ -330,16 +350,16 @@ ol.clean { margin: 0; padding-left: 22px; display: grid; gap: 7px; max-width: 70
 
     <div class="block">
       <h2>The fees the system needs</h2>
-      <p class="muted">The system runs on HighLevel. I pay for the HighLevel account itself, so it is not billed to Nova Kanata. The AI agent and every text and email carry usage costs. HighLevel charges these, and Nova Kanata pays them at cost, with no markup. They are separate from the $6,000. All amounts are in Canadian dollars.</p>
+      <p class="muted">The system runs on a custom CRM. I pay for the CRM itself, so it is not billed to Nova Kanata. The AI agent and every text and email carry usage costs. The messaging and AI providers charge these, and Nova Kanata pays them at cost, with no markup. They are separate from the $6,000. All amounts are in Canadian dollars.</p>
       <div class="table-wrap">
-        <table class="num">
+        <table class="num stack">
           <thead><tr><th>Fee</th><th>What it does</th><th class="r">Price (CAD)</th></tr></thead>
           <tbody>
-            <tr><td class="item">HighLevel account</td><td>The pipeline, forms and automations. One place for every lead.</td><td class="r">Paid by me, not billed to you</td></tr>
-            <tr><td class="item">AI agent</td><td>Replies to customers by text and chat, answers questions and collects quote details.</td><td class="r">About $69 a month (1,000 AI replies and 100 voice minutes), or about $134 a month (unlimited, fair use)</td></tr>
-            <tr><td class="item">Text messages</td><td>The one-minute reply and the follow-ups.</td><td class="r">About $0.015 to $0.017 per outbound segment</td></tr>
-            <tr><td class="item">Email</td><td>Confirmations and follow-up emails.</td><td class="r">About $0.93 per 1,000 emails</td></tr>
-            <tr><td class="item">Local phone number</td><td>The number customers receive texts from.</td><td class="r">About $1.60 a month</td></tr>
+            <tr><td class="item">Custom CRM</td><td data-label="What it does">The pipeline, forms and automations. One place for every lead.</td><td class="r" data-label="Price (CAD)">Paid by me, not billed to you</td></tr>
+            <tr><td class="item">AI agent</td><td data-label="What it does">Replies to customers by text and chat, answers questions and collects quote details.</td><td class="r" data-label="Price (CAD)">About $69 a month (1,000 AI replies and 100 voice minutes), or about $134 a month (unlimited, fair use)</td></tr>
+            <tr><td class="item">Text messages</td><td data-label="What it does">The one-minute reply and the follow-ups.</td><td class="r" data-label="Price (CAD)">About $0.015 to $0.017 per outbound segment</td></tr>
+            <tr><td class="item">Email</td><td data-label="What it does">Confirmations and follow-up emails.</td><td class="r" data-label="Price (CAD)">About $0.93 per 1,000 emails</td></tr>
+            <tr><td class="item">Local phone number</td><td data-label="What it does">The number customers receive texts from.</td><td class="r" data-label="Price (CAD)">About $1.60 a month</td></tr>
           </tbody>
         </table>
       </div>
@@ -347,12 +367,12 @@ ol.clean { margin: 0; padding-left: 22px; display: grid; gap: 7px; max-width: 70
         <div class="tile"><p class="k">Lean month</p><p class="v num">About $90</p><p class="s">AI agent on the $69 tier, about 1,000 text segments and 2,000 emails.</p></div>
         <div class="tile"><p class="k">Busy month</p><p class="v num">About $180</p><p class="s">AI agent on the $134 unlimited tier, about 2,500 text segments and 5,000 emails.</p></div>
       </div>
-      <p class="note">Over three months that is about $270 to $540. HighLevel bills in US dollars, so these are converted at about 1.38 CAD per USD and will move with the exchange rate. Prices are HighLevel's published rates as summarised by <a href="https://www.apexure.com/blog/gohighlevel-pricing">Apexure</a> (plans), <a href="https://botpenguin.com/blogs/gohighlevel-ai-pricing">BotPenguin</a> (AI agent) and <a href="https://revenuegeeks.com/guides/gohighlevel-pricing">RevenueGeeks</a> (usage), checked in October 2026. Confirm on HighLevel's pricing page before subscribing.</p>
+      <p class="note">Over three months that is about $270 to $540. Some providers bill in US dollars, so these amounts are converted at about 1.38 CAD per USD and will move with the exchange rate. They are estimates based on current published rates, checked in October 2026, and will be confirmed before launch.</p>
     </div>
 
     <div class="block">
       <div class="callout">
-        <p><strong>What Nova Kanata pays over three months.</strong> $6,000 once to me, about $270 to $540 in usage fees to HighLevel, and the ad spend you choose, which I suggest at $1,000 to $1,500 a month ($3,000 to $4,500), paid to Meta. In total, roughly $9,300 to $11,050 CAD.</p>
+        <p><strong>What Nova Kanata pays over three months.</strong> $6,000 once to me, about $270 to $540 in usage fees to the CRM's messaging and AI providers, and the ad spend you choose, which I suggest at $1,000 to $1,500 a month ($3,000 to $4,500), paid to Meta. In total, roughly $9,300 to $11,050 CAD.</p>
       </div>
     </div>
 
@@ -360,7 +380,7 @@ ol.clean { margin: 0; padding-left: 22px; display: grid; gap: 7px; max-width: 70
       <h2>Not included</h2>
       <ul class="clean">
         <li><strong>Ad spend</strong>, paid directly to Meta from your own account</li>
-        <li><strong>AI agent and messaging usage fees</strong>, paid directly to HighLevel as listed above (the HighLevel account itself is mine)</li>
+        <li><strong>AI agent and messaging usage fees</strong>, paid at cost as listed above (the CRM itself is mine)</li>
         <li><strong>Domain renewal</strong>, billed at cost by the provider</li>
         <li><strong>A new professional photo or video shoot.</strong> I work from what you have</li>
       </ul>
@@ -395,7 +415,7 @@ ol.clean { margin: 0; padding-left: 22px; display: grid; gap: 7px; max-width: 70
     <div class="block" style="margin-top:0;">
       <h2>Timeline</h2>
       <div class="table-wrap">
-        <table>
+        <table class="stack nolabel">
           <thead><tr><th>When</th><th>What happens</th></tr></thead>
           <tbody>
             <tr><td class="item">Week 1</td><td>Kickoff call, access to accounts, product details and photos, site structure agreed</td></tr>
