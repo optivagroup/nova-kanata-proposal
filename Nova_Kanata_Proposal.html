@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Nova Kanata Proposal</title>
+</head>
+<body>
+
+<style>
+html{-webkit-text-size-adjust:100%}
+:root {
+  --bg: #F2F7FC;
+  --surface: #FFFFFF;
+  --surface-2: #E6EEF8;
+  --ink: #0F1E33;
+  --ink-2: #43546B;
+  --ink-3: #62738A;
+  --line: #D3DEEC;
+  --accent: #1B4F8F;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #D9E8F8;
+  --warm: #B7782F;
+  --warm-soft: #F1E4D2;
+  --slate: #243B5A;
+  --slat: #CFE3F7;
+  --font-display: "Avenir Next", "Segoe UI", "Segoe UI", system-ui, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1626; --surface: #132238; --surface-2: #1A2D48; --ink: #E8F0FA; --ink-2: #AEBDD0; --ink-3: #8497B0;
+    --line: #263A58; --accent: #7DB9F0; --accent-ink: #08121F; --accent-soft: #1B3556; --warm: #D9A064; --warm-soft: #33261A;
+    --slate: #C4D4E8; --slat: #1B3556; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1626; --surface: #132238; --surface-2: #1A2D48; --ink: #E8F0FA; --ink-2: #AEBDD0; --ink-3: #8497B0;
+  --line: #263A58; --accent: #7DB9F0; --accent-ink: #08121F; --accent-soft: #1B3556; --warm: #D9A064; --warm-soft: #33261A;
+  --slate: #C4D4E8; --slat: #1B3556; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.55; margin: 0; }
+.wrap { max-width: 1080px; margin-inline: auto; padding-inline: 20px; padding-block: 0 64px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; letter-spacing: -0.015em; margin: 0; }
+p { margin: 0 0 12px; max-width: 70ch; }
+a { color: var(--accent); }
+button, input { font: inherit; color: inherit; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px; }
+.num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--ink-2); }
+.note { font-size: 0.88rem; color: var(--ink-3); margin-top: 12px; }
+
+.head { padding-block: 44px 0; }
+.head h1 { font-size: clamp(1.9rem, 4.4vw, 2.9rem); margin-bottom: 10px; }
+.head .sub { font-size: 1.08rem; color: var(--ink-2); max-width: 60ch; }
+.slats { height: 22px; margin-top: 26px; background: repeating-linear-gradient(90deg, var(--slat) 0 26px, transparent 26px 32px); border-radius: 3px; }
+
+.tabbar { position: sticky; top: 0; z-index: 5; background: var(--bg); margin-top: 18px; border-bottom: 1px solid var(--line); display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.tabbar::-webkit-scrollbar { display: none; }
+.tab { -webkit-appearance: none; appearance: none; background: none; border: 0; border-bottom: 3px solid transparent; padding: 14px 14px 11px; font-weight: 600; font-size: 0.95rem; color: var(--ink-3); cursor: pointer; white-space: nowrap; touch-action: manipulation; }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.panel { padding-block: 28px 0; }
+.panel-title { display: none; font-size: 1.7rem; margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 3px solid var(--accent); }
+.nojs .panel-title { display: block; }
+.nojs .tabbar { display: none; }
+
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; min-width: 0; }
+.tile .k { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 8px; }
+.tile .v { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 6px; }
+.tile p.s { font-size: 0.86rem; color: var(--ink-2); margin: 0; }
+.tile.main { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.tile.main .k, .tile.main p.s { color: var(--accent-ink); opacity: 0.88; }
+
+.block { margin-top: 30px; }
+.block > h2 { font-size: 1.3rem; margin-bottom: 12px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+
+.wf { display: grid; gap: 14px; }
+.wf-row { display: grid; grid-template-columns: 200px minmax(0, 1fr) 96px; gap: 16px; align-items: center; }
+.wf-label { font-weight: 600; font-size: 0.95rem; }
+.wf-track { position: relative; height: 26px; background: var(--surface-2); border-radius: 6px; }
+.wf-bar { position: absolute; top: 0; bottom: 0; border-radius: 6px; }
+.wf-val { font-family: var(--font-mono); font-size: 0.95rem; text-align: right; }
+.wf-site { margin-top: 18px; padding: 12px 14px; border-radius: 10px; background: var(--accent-soft); font-size: 0.95rem; }
+
+.flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; counter-reset: s; }
+.flow li { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; counter-increment: s; min-width: 0; }
+.flow li::before { content: counter(s); display: block; font-family: var(--font-mono); font-size: 12px; color: var(--accent); margin-bottom: 6px; }
+.flow strong { display: block; font-size: 0.95rem; margin-bottom: 4px; }
+.flow span { font-size: 0.86rem; color: var(--ink-2); display: block; }
+
+.cover { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.part h3 { font-size: 1.12rem; }
+.part-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.badge { font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); }
+.badge.free { background: var(--accent-soft); padding: 3px 10px; border-radius: 999px; font-size: 0.8rem; }
+.part h4 { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 14px 0 6px; }
+.part ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 0.94rem; }
+.part p { font-size: 0.94rem; margin: 0; }
+.part .range { font-size: 0.86rem; color: var(--ink-3); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 0.94rem; min-width: 520px; }
+th { text-align: left; font-family: var(--font-mono); font-weight: 500; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); padding: 12px 16px; border-bottom: 1px solid var(--line); }
+td { padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+tr.sub td { font-weight: 600; background: var(--surface-2); }
+tr.final td { font-weight: 700; background: var(--accent); color: var(--accent-ink); }
+td.item { font-weight: 600; }
+.free-tag { color: var(--accent); font-weight: 600; }
+
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.callout { background: var(--accent-soft); border-radius: 14px; padding: 18px 20px; }
+.callout p:last-child { margin-bottom: 0; }
+ul.clean { margin: 0; padding-left: 20px; display: grid; gap: 7px; max-width: 70ch; }
+ol.clean { margin: 0; padding-left: 22px; display: grid; gap: 7px; max-width: 70ch; }
+
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.field { display: grid; gap: 6px; margin-bottom: 16px; }
+.field:last-child { margin-bottom: 0; }
+.field label { font-weight: 600; font-size: 0.92rem; display: flex; justify-content: space-between; gap: 12px; }
+.field output { font-family: var(--font-mono); color: var(--accent); }
+.field input[type="number"] { width: 100%; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); font-size: 16px; }
+.field input[type="range"] { width: 100%; accent-color: var(--accent); }
+.rowin { display: grid; grid-template-columns: minmax(0, 1fr) 96px; gap: 14px; align-items: center; }
+.rowin input[type="range"] { height: 32px; margin: 0; }
+.res { display: grid; gap: 12px; align-content: start; }
+.res .tile .v { font-size: 1.7rem; }
+
+.foot { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 0.88rem; color: var(--ink-3); }
+
+@media (max-width: 860px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cover, .two, .calc { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .head { padding-block: 30px 0; }
+  .wf-row { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; }
+  .wf-track { grid-column: 1 / -1; grid-row: 2; }
+  .tiles { gap: 10px; }
+  .tile { padding: 14px; }
+  .card { padding: 18px; }
+}
+</style>
+
+<div class="wrap nojs" id="root">
+
+  <header class="head">
+    <p class="eyebrow">Proposal &middot; Nova Kanata &middot; October 2026</p>
+    <h1>A growth system for Nova Kanata</h1>
+    <p class="sub">A website, a speed-to-lead system with an AI agent, and Meta ads. I build all three and run the ads for three months. All prices are in Canadian dollars.</p>
+    <div class="slats" aria-hidden="true"></div>
+  </header>
+
+  <div class="tabbar" role="tablist" aria-label="Proposal sections">
+    <button type="button" class="tab" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true">Overview</button>
+    <button type="button" class="tab" role="tab" id="tab-coverage" aria-controls="panel-coverage" aria-selected="false">What I cover</button>
+    <button type="button" class="tab" role="tab" id="tab-costs" aria-controls="panel-costs" aria-selected="false">Costs</button>
+    <button type="button" class="tab" role="tab" id="tab-payback" aria-controls="panel-payback" aria-selected="false">Payback</button>
+    <button type="button" class="tab" role="tab" id="tab-timeline" aria-controls="panel-timeline" aria-selected="false">Timeline &amp; terms</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+    <h2 class="panel-title">Overview</h2>
+    <div class="tiles">
+      <div class="tile">
+        <p class="k">Package value</p>
+        <p class="v num">$10,000</p>
+        <p class="s">Four parts, at agency rates. Website not counted.</p>
+      </div>
+      <div class="tile">
+        <p class="k">Website</p>
+        <p class="v">Included</p>
+        <p class="s">At no charge. Worth about $3,500.</p>
+      </div>
+      <div class="tile main">
+        <p class="k">Your price</p>
+        <p class="v num">$6,000</p>
+        <p class="s">One payment, CAD.</p>
+      </div>
+      <div class="tile">
+        <p class="k">Usage fees</p>
+        <p class="v num">~$90&ndash;180</p>
+        <p class="s">A month for the AI agent, texts and email, paid at cost. I cover the HighLevel account.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>From $10,000 to $6,000</h2>
+      <div class="card">
+        <div class="wf" role="img" aria-label="Package value of $10,000, minus a $4,000 introductory discount, leaves a price of $6,000 paid once">
+          <div class="wf-row"><div class="wf-label">Value of the four parts</div><div class="wf-track"><div class="wf-bar" style="left:0; width:100%; background:var(--slate)"></div></div><div class="wf-val num">$10,000</div></div>
+          <div class="wf-row"><div class="wf-label">Introductory discount</div><div class="wf-track"><div class="wf-bar" style="left:60%; width:40%; background:var(--warm)"></div></div><div class="wf-val num">&minus;$4,000</div></div>
+          <div class="wf-row"><div class="wf-label">Your price, paid once</div><div class="wf-track"><div class="wf-bar" style="left:0; width:60%; background:var(--accent)"></div></div><div class="wf-val num">$6,000</div></div>
+        </div>
+        <p class="wf-site"><strong>The website is included at no charge.</strong> Because this is our first project together, I am building the site, the quote form and the tracking for free, and bringing the price down from $10,000 to $6,000.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>How a customer moves through the system</h2>
+      <ol class="flow">
+        <li><strong>Sees the ad</strong><span>Meta ads on Facebook and Instagram.</span></li>
+        <li><strong>Asks for a quote</strong><span>The website and its quote form collect the details.</span></li>
+        <li><strong>Gets a reply in a minute</strong><span>Text and email, at any hour. The AI agent starts the conversation.</span></li>
+        <li><strong>Your team is alerted</strong><span>Details and conversation arrive together. Your team sends the quote.</span></li>
+        <li><strong>Follow-up runs itself</strong><span>If they go quiet, texts and emails go out. A report follows every two weeks.</span></li>
+      </ol>
+      <p class="note">Nova Kanata keeps pricing, quoting, closing the sale and delivery. The system hands your team a customer who is already qualified.</p>
+    </div>
+  </div>
+
+  <!-- COVERAGE -->
+  <div class="panel" role="tabpanel" id="panel-coverage" aria-labelledby="tab-coverage">
+    <h2 class="panel-title">What I cover</h2>
+    <p class="muted">I cover everything from the first ad to the follow-up after your quote. Each part below shows what I do, what Nova Kanata provides, and what an agency typically charges for it.</p>
+    <div class="cover">
+
+      <div class="card part">
+        <div class="part-head"><h3>Speed-to-lead build</h3><span class="badge num">$3,500</span></div>
+        <h4>What I do</h4>
+        <ul>
+          <li>Set up HighLevel for Nova Kanata with one pipeline for every lead</li>
+          <li>Connect the website form, Instagram messages and ad lead forms</li>
+          <li>Write the instant reply, confirmation and follow-up text and email sequences</li>
+          <li>Build follow-up for customers who go quiet</li>
+          <li>Set up instant team alerts</li>
+          <li>Test every path a lead can take</li>
+        </ul>
+        <h4>Nova Kanata provides</h4>
+        <p>One person who receives the alerts and responds.</p>
+        <p class="range">Agency range: $2,000 to $4,000</p>
+      </div>
+
+      <div class="card part">
+        <div class="part-head"><h3>AI agent setup</h3><span class="badge num">$2,000</span></div>
+        <h4>What I do</h4>
+        <ul>
+          <li>Write the agent's instructions and tone</li>
+          <li>Load your product, colour and delivery information</li>
+          <li>Set the questions it asks before a quote</li>
+          <li>Build the handoff to your team</li>
+          <li>Test it on realistic conversations before it talks to customers</li>
+        </ul>
+        <h4>Nova Kanata provides</h4>
+        <p>Updates when products, prices or policies change. The agent's running cost is a usage fee, listed under Costs.</p>
+        <p class="range">Agency range: $1,000 to $2,500</p>
+      </div>
+
+      <div class="card part">
+        <div class="part-head"><h3>Meta ads, three months</h3><span class="badge num">$3,000</span></div>
+        <h4>What I do</h4>
+        <ul>
+          <li>Campaign setup, audiences and tracking</li>
+          <li>Monthly creative: images, short videos and copy, made with AI tools from your product photos</li>
+          <li>Weekly monitoring and adjustments</li>
+        </ul>
+        <h4>Nova Kanata provides</h4>
+        <p>Access to the ad account, and the ad spend itself, paid directly to Meta.</p>
+        <p class="range">Agency range: $2,000 to $4,500 for three months</p>
+      </div>
+
+      <div class="card part">
+        <div class="part-head"><h3>Reporting and support, three months</h3><span class="badge num">$1,500</span></div>
+        <h4>What I do</h4>
+        <ul>
+          <li>A report every two weeks: leads, cost per lead, response time and quotes sent</li>
+          <li>Changes to the site and automations as we learn what works</li>
+          <li>Direct access to me by phone or message</li>
+        </ul>
+        <h4>Nova Kanata provides</h4>
+        <p>Answers to my questions within a day.</p>
+        <p class="range">Agency range: $800 to $2,000</p>
+      </div>
+
+      <div class="card part" style="grid-column: 1 / -1;">
+        <div class="part-head"><h3>Website, quote form and tracking</h3><span class="badge free">Included at no charge &middot; worth about $3,500</span></div>
+        <div class="two" style="gap:24px;">
+          <div>
+            <h4>What I do</h4>
+            <ul>
+              <li>Plan the pages and write the copy</li>
+              <li>Design and build the site for fences, wall siding and accessories, laid out for phones</li>
+              <li>Build the quote form: project type, measurements, photos, location and timeline</li>
+              <li>Install tracking that shows which ad sent each customer</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Nova Kanata provides</h4>
+            <p>Product information and photos, and approval of the pages.</p>
+            <p class="range" style="margin-top:22px;">Agency range: $2,500 to $5,000</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p class="note">Agency ranges are approximate figures for freelancers and small agencies in Canada, not quotes from specific companies.</p>
+  </div>
+
+  <!-- COSTS -->
+  <div class="panel" role="tabpanel" id="panel-costs" aria-labelledby="tab-costs">
+    <h2 class="panel-title">Costs</h2>
+    <div class="block" style="margin-top:0;">
+      <h2>The price</h2>
+      <div class="table-wrap">
+        <table class="num">
+          <thead><tr><th>Part</th><th class="r">Value (CAD)</th></tr></thead>
+          <tbody>
+            <tr><td class="item">Speed-to-lead build</td><td class="r">$3,500</td></tr>
+            <tr><td class="item">AI agent setup</td><td class="r">$2,000</td></tr>
+            <tr><td class="item">Meta ads, three months</td><td class="r">$3,000</td></tr>
+            <tr><td class="item">Reporting and support, three months</td><td class="r">$1,500</td></tr>
+            <tr class="sub"><td>Package value</td><td class="r">$10,000</td></tr>
+            <tr><td class="item">Website, quote form and tracking <span class="free-tag">(included, worth about $3,500)</span></td><td class="r free-tag">No charge</td></tr>
+            <tr><td class="item">Introductory discount</td><td class="r">&minus;$4,000</td></tr>
+            <tr class="final"><td>Your price, one payment</td><td class="r">$6,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>The fees the system needs</h2>
+      <p class="muted">The system runs on HighLevel. I pay for the HighLevel account itself, so it is not billed to Nova Kanata. The AI agent and every text and email carry usage costs. HighLevel charges these, and Nova Kanata pays them at cost, with no markup. They are separate from the $6,000. All amounts are in Canadian dollars.</p>
+      <div class="table-wrap">
+        <table class="num">
+          <thead><tr><th>Fee</th><th>What it does</th><th class="r">Price (CAD)</th></tr></thead>
+          <tbody>
+            <tr><td class="item">HighLevel account</td><td>The pipeline, forms and automations. One place for every lead.</td><td class="r">Paid by me, not billed to you</td></tr>
+            <tr><td class="item">AI agent</td><td>Replies to customers by text and chat, answers questions and collects quote details.</td><td class="r">About $69 a month (1,000 AI replies and 100 voice minutes), or about $134 a month (unlimited, fair use)</td></tr>
+            <tr><td class="item">Text messages</td><td>The one-minute reply and the follow-ups.</td><td class="r">About $0.015 to $0.017 per outbound segment</td></tr>
+            <tr><td class="item">Email</td><td>Confirmations and follow-up emails.</td><td class="r">About $0.93 per 1,000 emails</td></tr>
+            <tr><td class="item">Local phone number</td><td>The number customers receive texts from.</td><td class="r">About $1.60 a month</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="two" style="margin-top:14px;">
+        <div class="tile"><p class="k">Lean month</p><p class="v num">About $90</p><p class="s">AI agent on the $69 tier, about 1,000 text segments and 2,000 emails.</p></div>
+        <div class="tile"><p class="k">Busy month</p><p class="v num">About $180</p><p class="s">AI agent on the $134 unlimited tier, about 2,500 text segments and 5,000 emails.</p></div>
+      </div>
+      <p class="note">Over three months that is about $270 to $540. HighLevel bills in US dollars, so these are converted at about 1.38 CAD per USD and will move with the exchange rate. Prices are HighLevel's published rates as summarised by <a href="https://www.apexure.com/blog/gohighlevel-pricing">Apexure</a> (plans), <a href="https://botpenguin.com/blogs/gohighlevel-ai-pricing">BotPenguin</a> (AI agent) and <a href="https://revenuegeeks.com/guides/gohighlevel-pricing">RevenueGeeks</a> (usage), checked in October 2026. Confirm on HighLevel's pricing page before subscribing.</p>
+    </div>
+
+    <div class="block">
+      <div class="callout">
+        <p><strong>What Nova Kanata pays over three months.</strong> $6,000 once to me, about $270 to $540 in usage fees to HighLevel, and the ad spend you choose, which I suggest at $1,000 to $1,500 a month ($3,000 to $4,500), paid to Meta. In total, roughly $9,300 to $11,050 CAD.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Not included</h2>
+      <ul class="clean">
+        <li><strong>Ad spend</strong>, paid directly to Meta from your own account</li>
+        <li><strong>AI agent and messaging usage fees</strong>, paid directly to HighLevel as listed above (the HighLevel account itself is mine)</li>
+        <li><strong>Domain renewal</strong>, billed at cost by the provider</li>
+        <li><strong>A new professional photo or video shoot.</strong> I work from what you have</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PAYBACK -->
+  <div class="panel" role="tabpanel" id="panel-payback" aria-labelledby="tab-payback">
+    <h2 class="panel-title">Payback</h2>
+    <p class="muted">How many extra fences does Nova Kanata need to sell for the system to pay for itself? Drag the sliders or change the numbers to see. The starting numbers are assumptions.</p>
+    <div class="calc">
+      <div class="card">
+        <div class="field"><label for="in-price">Average fence price (CAD)</label><input id="in-price" type="number" inputmode="decimal" min="1" step="10" value="300"></div>
+        <div class="field"><label for="in-margin">Gross margin (%)</label><div class="rowin"><input id="in-margin" type="range" min="10" max="70" step="5" value="40"><input id="in-margin-n" type="number" inputmode="decimal" min="1" max="100" step="1" value="40" aria-label="Gross margin percent"></div></div>
+        <div class="field"><label for="in-per">Fences in an average order</label><input id="in-per" type="number" inputmode="numeric" min="1" step="1" value="5"></div>
+        <div class="field"><label for="in-ad">Monthly ad spend (CAD)</label><div class="rowin"><input id="in-ad" type="range" min="500" max="3000" step="250" value="1250"><input id="in-ad-n" type="number" inputmode="decimal" min="0" step="50" value="1250" aria-label="Monthly ad spend in dollars"></div></div>
+        <div class="field"><label for="in-plat">Usage fees a month (CAD)</label><input id="in-plat" type="number" inputmode="decimal" min="0" step="10" value="135"></div>
+      </div>
+      <div class="res" aria-live="polite">
+        <div class="tile"><p class="k">Total cost, three months</p><p class="v num" id="r-total">$10,155</p><p class="s" id="r-total-note">$6,000 fee + ad spend + usage fees</p></div>
+        <div class="tile"><p class="k">Gross profit per fence</p><p class="v num" id="r-profit">$120</p><p class="s">Fence price times margin</p></div>
+        <div class="tile main"><p class="k">Extra fences to cover everything</p><p class="v num" id="r-fences">85</p><p class="s" id="r-orders">About 17 extra orders over three months</p></div>
+        <div class="tile"><p class="k">Extra fences to cover my $6,000 fee only</p><p class="v num" id="r-fee">50</p><p class="s" id="r-fee-orders">About 10 extra orders</p></div>
+      </div>
+    </div>
+    <p class="note">A contractor who reorders changes the picture a lot: one contractor buying 10 fences a month brings in 30 fences over three months. I cannot promise a number of orders, because results depend on the market, the season and the ad budget. I commit to the work listed here, a reply to every lead within one minute, and a report every two weeks.</p>
+  </div>
+
+  <!-- TIMELINE & TERMS -->
+  <div class="panel" role="tabpanel" id="panel-timeline" aria-labelledby="tab-timeline">
+    <h2 class="panel-title">Timeline &amp; terms</h2>
+    <div class="block" style="margin-top:0;">
+      <h2>Timeline</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>When</th><th>What happens</th></tr></thead>
+          <tbody>
+            <tr><td class="item">Week 1</td><td>Kickoff call, access to accounts, product details and photos, site structure agreed</td></tr>
+            <tr><td class="item">Weeks 2 to 3</td><td>Website and quote form built. Speed-to-lead system and AI agent built and tested</td></tr>
+            <tr><td class="item">Week 4</td><td>Site and system go live. First ad campaigns launch</td></tr>
+            <tr><td class="item">Month 2</td><td>Ads running, new creative tested, follow-up messages adjusted from real replies</td></tr>
+            <tr><td class="item">Month 3</td><td>Keep what works, cut what does not. Final results report and a recommendation for next steps</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Starting in October means the system is tested and tuned over the slow season and ready before spring demand.</p>
+    </div>
+
+    <div class="block two" style="gap:28px;">
+      <div>
+        <h2>What I need from you</h2>
+        <ul class="clean">
+          <li>Access to the website and domain, and to the Facebook and Instagram business accounts</li>
+          <li>A Meta ad account with a payment method on file</li>
+          <li>Product photos, videos, colour options, spec sheets, delivery areas, lead times and anything the AI agent should not promise</li>
+          <li>Rough price guidance so the form and follow-up messages set the right expectations</li>
+          <li>One person who receives leads and can answer my questions within a day</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Terms</h2>
+        <ul class="clean">
+          <li><strong>Payment.</strong> One payment of $6,000 CAD before kickoff.</li>
+          <li><strong>Introductory pricing.</strong> The package is valued at $10,000. Because this is our first project together, the website is included at no charge and the price is $6,000.</li>
+          <li><strong>Ownership.</strong> The website, the ad account, the ad creative and all lead data belong to Nova Kanata from day one.</li>
+          <li><strong>After three months.</strong> No automatic renewal. We review the results together and you decide what happens next. If you want ads to keep running, we agree a lower monthly fee, since the build is already paid for.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Next steps</h2>
+      <ol class="clean">
+        <li>Nova Kanata confirms the proposal and the monthly ad budget.</li>
+        <li>I send the invoice and the onboarding form.</li>
+        <li>We hold a kickoff call in week 1 and I start the build.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="foot"><span>Prepared by Aryo for Nova Kanata</span><span>October 2026</span></div>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('root');
+  var ids = ['overview', 'coverage', 'costs', 'payback', 'timeline'];
+  function show(id, focus) {
+    ids.forEach(function (k) {
+      var t = document.getElementById('tab-' + k), p = document.getElementById('panel-' + k), on = k === id;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      p.style.display = on ? '' : 'none';
+      if (on && focus) t.focus();
+    });
+    window.scrollTo(0, 0);
+  }
+  try {
+    root.className = root.className.replace('nojs', '').replace(/\s+$/, '');
+    ids.forEach(function (k, i) {
+      var t = document.getElementById('tab-' + k);
+      t.addEventListener('click', function () { show(k); });
+      t.addEventListener('keydown', function (e) {
+        var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : -1;
+        if (j >= 0 && j < ids.length) { e.preventDefault(); show(ids[j], true); }
+      });
+    });
+    show('overview');
+  } catch (e) { root.className = 'wrap nojs'; ids.forEach(function (k) { document.getElementById('panel-' + k).style.display = ''; }); }
+
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-CA'); }
+  function val(id, min) { var v = parseFloat(document.getElementById(id).value); return isNaN(v) ? min : Math.max(min, v); }
+  function calc() {
+    var price = val('in-price', 1), margin = Math.min(1, val('in-margin-n', 1) / 100), per = Math.max(1, Math.round(val('in-per', 1)));
+    var ad = val('in-ad-n', 0), plat = val('in-plat', 0);
+    var total = 6000 + 3 * ad + 3 * plat, profit = price * margin;
+    var fAll = Math.ceil(total / profit), fFee = Math.ceil(6000 / profit);
+    document.getElementById('r-total').textContent = money(total);
+    document.getElementById('r-profit').textContent = money(profit);
+    document.getElementById('r-fences').textContent = fAll.toLocaleString('en-CA');
+    document.getElementById('r-orders').textContent = 'About ' + Math.ceil(fAll / per) + ' extra orders over three months';
+    document.getElementById('r-fee').textContent = fFee.toLocaleString('en-CA');
+    document.getElementById('r-fee-orders').textContent = 'About ' + Math.ceil(fFee / per) + ' extra orders';
+  }
+  function link(r, n) {
+    var a = document.getElementById(r), b = document.getElementById(n);
+    function fromRange() { b.value = a.value; calc(); }
+    function fromNum() { var v = parseFloat(b.value); if (!isNaN(v)) a.value = v; calc(); }
+    ['input', 'change'].forEach(function (ev) { a.addEventListener(ev, fromRange); });
+    ['input', 'change', 'keyup'].forEach(function (ev) { b.addEventListener(ev, fromNum); });
+  }
+  link('in-margin', 'in-margin-n'); link('in-ad', 'in-ad-n');
+  ['in-price', 'in-per', 'in-plat'].forEach(function (id) {
+    var el = document.getElementById(id);
+    ['input', 'change', 'keyup'].forEach(function (ev) { el.addEventListener(ev, calc); });
+  });
+  calc();
+})();
+</script>
+
+</body>
+</html>
